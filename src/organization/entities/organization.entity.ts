@@ -7,6 +7,9 @@ export class Organization {
 
     @Column()
     org_name:String;
+    
+    @Column()
+    org_password:String;
 
     @Column()
     org_terms_cond:Boolean;

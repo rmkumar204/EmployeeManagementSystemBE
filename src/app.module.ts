@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { OrganizationModule } from './organization/organization.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Organization } from './organization/entities/organization.entity';
+import { LoginModule } from './login/login.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -15,11 +17,13 @@ import { Organization } from './organization/entities/organization.entity';
       password:'400',
       database:'ems',
 
-      entities:[Organization],
+      entities:[__dirname + '/**/*.entity{.ts,.js}'],
       synchronize:true
 
     }),
-    OrganizationModule],
+    OrganizationModule,
+    LoginModule,
+    UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })

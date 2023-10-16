@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { Organization } from './entities/organization.entity';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class OrganizationService {
@@ -12,8 +13,15 @@ export class OrganizationService {
     @InjectRepository(Organization) private organizationEntity:Repository<Organization>
   ){}
  async create(createOrganizationDto: CreateOrganizationDto) {
-      // await this.organizationEntity.query('insert')
-    return await 'This action adds a new organization';
+  const hashedpassword= await bcrypt.hash(createOrganizationDto.org_password,10)
+      await this.organizationEntity.query(`
+      INSERT INTO organization(org_name,org_terms_cond,org_password) VALUES(
+        '${createOrganizationDto.org_name}',
+        ${createOrganizationDto.org_terms_cond},
+        '${hashedpassword}'
+        )`);
+        throw new HttpException('Success', HttpStatus.CREATED)
+    // return {statusCode:201, message:'Organization Details added'};
   }
 
   findAll() {
