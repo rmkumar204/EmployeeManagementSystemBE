@@ -7,6 +7,7 @@ import { Organization } from './organization/entities/organization.entity';
 import { LoginModule } from './login/login.module';
 import { UsersModule } from './users/users.module';
 import { WorkspaceModule } from './workspace/workspace.module';
+import { DocumentModule } from './document/document.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { WorkspaceModule } from './workspace/workspace.module';
     OrganizationModule,
     LoginModule,
     UsersModule,
-    WorkspaceModule],
+    WorkspaceModule,
+    DocumentModule],
   controllers: [AppController],
   providers: [AppService],
 })
